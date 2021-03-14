@@ -87,6 +87,28 @@ describe('Table Row', () => {
     expect(wrapper.html()).toMatchSnapshot()
   })
 
+  it('should render with cellClass function', () => {
+    const wrapper = mountFunction({
+      context: {
+        props: {
+          headers: [
+            { text: 'Petrol', value: 'petrol', cellClass: item => item.petrol > 0.67 ? 'y' : 'n' },
+            { text: 'Diesel', value: 'diesel', cellClass: item => item.diesel > 0.67 ? 'y' : 'n' },
+          ],
+          item: {
+            petrol: 0.68,
+            diesel: 0.65,
+          },
+        },
+      },
+    })
+
+    const tds = wrapper.findAll('td')
+    expect(tds.at(0).classes()).toContain('y')
+    expect(tds.at(1).classes()).toContain('n')
+    expect(wrapper.html()).toMatchSnapshot()
+  })
+
   it.skip('should render with regular slots', () => {
     const wrapper = mountFunction({
       context: {

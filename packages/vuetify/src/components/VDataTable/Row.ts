@@ -47,7 +47,7 @@ export default Vue.extend({
       return h('td', {
         class: [
           textAlign,
-          header.cellClass,
+          typeof header.cellClass !== 'function' ? header.cellClass : header.cellClass(props.item),
           {
             'v-data-table__divider': header.divider,
           },
